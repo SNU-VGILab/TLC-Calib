@@ -261,7 +261,11 @@ If you use our paper, code, dataset, or any part of this repository in your rese
 @article{jung2026targetless,
   title   = {{Targetless LiDAR-Camera Calibration with Neural Gaussian Splatting}},
   author  = {Jung, Haebeom and Kim, Namtae and Kim, Jungwoo and Park, Jaesik},
-  journal = {IEEE Robotics and Automation Letters (RA-L)},
-  year    = {2026}
+  journal = {IEEE Robotics and Automation Letters},
+  volume  = {11},
+  number  = {4},
+  pages   = {4777--4784},
+  year    = {2026},
+  doi     = {10.1109/LRA.2026.3665066}
 }
 ```
