@@ -20,7 +20,7 @@
     <a href="https://arxiv.org/abs/2504.04597"><img src="https://img.shields.io/badge/arXiv-2504.04597-b31b1b.svg"></a>
     <a href="https://ieeexplore.ieee.org/document/11397170"><img src="https://img.shields.io/badge/IEEE-11397170-00629B.svg"></a>
     <a href="https://www.haebeom.com/tlc-calib-site/"><img src="https://img.shields.io/badge/Project%20Page-TLC--Calib-00B894.svg"></a>
-    <a href="https://drive.google.com/drive/folders/1P9EcXuyUL9NZpgj-IU44-UfJUDiEZ7zg?usp=drive_link"><img src="https://img.shields.io/badge/Dataset-Google%20Drive-green.svg"></a>
+    <a href="https://huggingface.co/datasets/b1o1o1m/TLC-Calib"><img src="https://img.shields.io/badge/Dataset-Hugging%20Face-FFD21E.svg"></a>
   </p>
 </p>
 
@@ -46,6 +46,8 @@ Clone the repository with submodules:
 
 ```bash
 git clone https://github.com/SNU-VGILab/TLC-Calib.git --recursive
+```
+```bash
 cd TLC-Calib
 ```
 
@@ -59,26 +61,34 @@ Create the conda environment:
 
 ```bash
 conda env create -f environment.yml
+```
+```bash
 conda activate tlc_calib
 ```
 
-The provided environment has been tested with PyTorch 2.1.2 and CUDA 11.8. The CUDA rasterizer and simple-knn extensions are installed from the local submodules through `environment.yml`.
+The provided environment has been tested with `PyTorch 2.1.2` and `CUDA 11.8`. The CUDA rasterizer and `simple-knn` extensions are installed from the local submodules through `environment.yml`.
 
 ## Data Preparation
 
-We provide processed versions of public datasets such as KITTI-360 and FAST-LIVO2 in the TLC-Calib format. Waymo-derived processed data is not redistributed; please follow [Waymo notice](https://drive.google.com/file/d/1CfiYyHqnxyCuOyadUg85QyW_Cf8BMsTk/view?usp=sharing) and use the [TLC-Calib preprocessing repository](https://github.com/zang09/TLC-Calib_preprocessing) to process Waymo locally.
+We provide processed versions of public datasets such as KITTI-360 and FAST-LIVO2 in the TLC-Calib format through [Hugging Face](https://huggingface.co/datasets/b1o1o1m/TLC-Calib). Waymo-derived processed data is not redistributed. To use Waymo data, please follow the [Waymo README](https://huggingface.co/datasets/b1o1o1m/TLC-Calib/blob/main/Waymo/README.md) and process it locally with the [TLC-Calib preprocessing repository](https://github.com/zang09/TLC-Calib_preprocessing).
 
-Download the processed TLC-Calib dataset before running training or evaluation:
+Install the Hugging Face Hub CLI and download the processed TLC-Calib dataset before running training or evaluation:
 
 ```bash
-pip install gdown
-gdown --folder https://drive.google.com/drive/folders/1P9EcXuyUL9NZpgj-IU44-UfJUDiEZ7zg -O data/TLC-Calib
+pip install -U huggingface_hub
+```
+```bash
+hf download b1o1o1m/TLC-Calib \
+  --repo-type dataset \
+  --local-dir data/TLC-Calib
 ```
 
-Then unzip all downloaded archives:
+If the downloaded repository contains zip archives, extract them in place:
 
 ```bash
 cd data/TLC-Calib
+```
+```bash
 find . -name "*.zip" -execdir unzip -n "{}" \;
 ```
 
@@ -113,7 +123,7 @@ The dataset root follows this structure:
 
 All modalities use the same zero-based local frame index. For example, `images/image_00/000123.png`, `pcds/000123.pcd`, and line `123` in `params/lidars.txt` refer to the same sample.
 
-Important files in `params/` include `intrinsics.txt`, `lidars.txt`, `cams_to_lidar_gt.txt`, `cams_to_lidar_init.txt`, optional `timestamps.txt`, and camera-indexed files such as `cam0.txt` and `cam0_to_lidar.txt`. Supported dataset names include `kitti-360`, `waymo`, and `fast-livo2`; custom data can use the same layout. For more details, please refer to the `README.md` included in the [dataset link](https://drive.google.com/drive/folders/1P9EcXuyUL9NZpgj-IU44-UfJUDiEZ7zg?usp=drive_link).
+Important files in `params/` include `intrinsics.txt`, `lidars.txt`, `cams_to_lidar_gt.txt`, `cams_to_lidar_init.txt`, optional `timestamps.txt`, and camera-indexed files such as `cam0.txt` and `cam0_to_lidar.txt`. Supported dataset names include `KITTI-360`, `Waymo`, and `FAST-LIVO2`. Custom data can use the same layout. For more details, please refer to the [Dataset README](https://huggingface.co/datasets/b1o1o1m/TLC-Calib/blob/main/README.md) on Hugging Face.
 
 </details>
 
